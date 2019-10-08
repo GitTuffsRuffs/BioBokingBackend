@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="974fe3dccb5b427fa9a6721d57dc2f69" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="bio_bookingModel.auditoriums" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.authentication" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.cinemas" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.movies" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.payments" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.reservations" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.shows" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bio_bookingModel.users" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="bio_bookingModel.FK_auditoriums_cinemas" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_shows_auditoriums" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_authentication_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_shows_movies" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_payments_reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_reservations_shows" ManuallyRouted="false" />
+        <AssociationConnector Association="bio_bookingModel.FK_reservations_users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

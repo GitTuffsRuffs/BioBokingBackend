@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bio_bookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="auditoriums">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar(max)" Nullable="false" />
+    <Property Name="cinema_id" Type="bigint" Nullable="false" />
+    <Property Name="seats_total" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="authentication">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="service" Type="varchar(max)" Nullable="false" />
+    <Property Name="identyfier" Type="varchar(max)" Nullable="false" />
+    <Property Name="secret" Type="varchar(max)" Nullable="false" />
+    <Property Name="user_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cinemas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar(max)" Nullable="false" />
+    <Property Name="location" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="movies">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar(max)" Nullable="false" />
+    <Property Name="category" Type="varchar(max)" />
+    <Property Name="length" Type="smallint" />
+    <Property Name="age_limit" Type="tinyint" />
+    <Property Name="description" Type="varchar(max)" />
+    <Property Name="language" Type="varchar(max)" />
+    <Property Name="premiere" Type="date" />
+    <Property Name="imdb_tag" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="payments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="reservation_id" Type="bigint" Nullable="false" />
+    <Property Name="payed_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="amount" Type="bigint" Nullable="false" />
+    <Property Name="refernece" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="reservations">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="bigint" Nullable="false" />
+    <Property Name="show_id" Type="bigint" Nullable="false" />
+    <Property Name="seat_count" Type="tinyint" Nullable="false" />
+    <Property Name="first_seat_number" Type="tinyint" Nullable="false" />
+    <Property Name="reserved_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="shows">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="movie_id" Type="bigint" Nullable="false" />
+    <Property Name="auditorium_id" Type="bigint" Nullable="false" />
+    <Property Name="start_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="spoken_language" Type="varchar(max)" Nullable="false" />
+    <Property Name="subtitle_language" Type="bigint" Nullable="false" />
+    <Property Name="seat_price" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_auditoriums_cinemas">
+    <End Role="cinemas" Type="Self.cinemas" Multiplicity="1" />
+    <End Role="auditoriums" Type="Self.auditoriums" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cinemas">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="auditoriums">
+        <PropertyRef Name="cinema_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_authentication_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="authentication" Type="Self.authentication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="authentication">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payments_reservations">
+    <End Role="reservations" Type="Self.reservations" Multiplicity="1" />
+    <End Role="payments" Type="Self.payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reservations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="payments">
+        <PropertyRef Name="reservation_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reservations_shows">
+    <End Role="shows" Type="Self.shows" Multiplicity="1" />
+    <End Role="reservations" Type="Self.reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shows">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reservations">
+        <PropertyRef Name="show_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reservations_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="reservations" Type="Self.reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reservations">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shows_auditoriums">
+    <End Role="auditoriums" Type="Self.auditoriums" Multiplicity="1" />
+    <End Role="shows" Type="Self.shows" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="auditoriums">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="shows">
+        <PropertyRef Name="auditorium_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shows_movies">
+    <End Role="movies" Type="Self.movies" Multiplicity="1" />
+    <End Role="shows" Type="Self.shows" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="shows">
+        <PropertyRef Name="movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bio_bookingModelStoreContainer">
+    <EntitySet Name="auditoriums" EntityType="Self.auditoriums" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="authentication" EntityType="Self.authentication" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cinemas" EntityType="Self.cinemas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="movies" EntityType="Self.movies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="payments" EntityType="Self.payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reservations" EntityType="Self.reservations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shows" EntityType="Self.shows" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_auditoriums_cinemas" Association="Self.FK_auditoriums_cinemas">
+      <End Role="cinemas" EntitySet="cinemas" />
+      <End Role="auditoriums" EntitySet="auditoriums" />
+    </AssociationSet>
+    <AssociationSet Name="FK_authentication_users" Association="Self.FK_authentication_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="authentication" EntitySet="authentication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payments_reservations" Association="Self.FK_payments_reservations">
+      <End Role="reservations" EntitySet="reservations" />
+      <End Role="payments" EntitySet="payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reservations_shows" Association="Self.FK_reservations_shows">
+      <End Role="shows" EntitySet="shows" />
+      <End Role="reservations" EntitySet="reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reservations_users" Association="Self.FK_reservations_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="reservations" EntitySet="reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shows_auditoriums" Association="Self.FK_shows_auditoriums">
+      <End Role="auditoriums" EntitySet="auditoriums" />
+      <End Role="shows" EntitySet="shows" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shows_movies" Association="Self.FK_shows_movies">
+      <End Role="movies" EntitySet="movies" />
+      <End Role="shows" EntitySet="shows" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

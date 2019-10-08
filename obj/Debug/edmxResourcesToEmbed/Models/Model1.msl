@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bio_bookingModelStoreContainer" CdmEntityContainer="bio_bookingEntities">
+    <EntitySetMapping Name="auditoriums">
+      <EntityTypeMapping TypeName="bio_bookingModel.auditoriums">
+        <MappingFragment StoreEntitySet="auditoriums">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="cinema_id" ColumnName="cinema_id" />
+          <ScalarProperty Name="seats_total" ColumnName="seats_total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="authentication">
+      <EntityTypeMapping TypeName="bio_bookingModel.authentication">
+        <MappingFragment StoreEntitySet="authentication">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="service" ColumnName="service" />
+          <ScalarProperty Name="identyfier" ColumnName="identyfier" />
+          <ScalarProperty Name="secret" ColumnName="secret" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cinemas">
+      <EntityTypeMapping TypeName="bio_bookingModel.cinemas">
+        <MappingFragment StoreEntitySet="cinemas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="location" ColumnName="location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="movies">
+      <EntityTypeMapping TypeName="bio_bookingModel.movies">
+        <MappingFragment StoreEntitySet="movies">
+          <ScalarProperty Name="imdb_tag" ColumnName="imdb_tag" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="length" ColumnName="length" />
+          <ScalarProperty Name="age_limit" ColumnName="age_limit" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="language" ColumnName="language" />
+          <ScalarProperty Name="premiere" ColumnName="premiere" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="bio_bookingModel.payments">
+        <MappingFragment StoreEntitySet="payments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="reservation_id" ColumnName="reservation_id" />
+          <ScalarProperty Name="payed_at" ColumnName="payed_at" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="refernece" ColumnName="refernece" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reservations">
+      <EntityTypeMapping TypeName="bio_bookingModel.reservations">
+        <MappingFragment StoreEntitySet="reservations">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="show_id" ColumnName="show_id" />
+          <ScalarProperty Name="seat_count" ColumnName="seat_count" />
+          <ScalarProperty Name="first_seat_number" ColumnName="first_seat_number" />
+          <ScalarProperty Name="reserved_at" ColumnName="reserved_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shows">
+      <EntityTypeMapping TypeName="bio_bookingModel.shows">
+        <MappingFragment StoreEntitySet="shows">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="auditorium_id" ColumnName="auditorium_id" />
+          <ScalarProperty Name="start_at" ColumnName="start_at" />
+          <ScalarProperty Name="spoken_language" ColumnName="spoken_language" />
+          <ScalarProperty Name="subtitle_language" ColumnName="subtitle_language" />
+          <ScalarProperty Name="seat_price" ColumnName="seat_price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="bio_bookingModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="bio_bookingModel.users">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
