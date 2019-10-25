@@ -45,6 +45,7 @@
           <Property Name="language" Type="varchar(max)" />
           <Property Name="premiere" Type="date" />
           <Property Name="imdb_tag" Type="varchar(max)" Nullable="false" />
+          <Property Name="image_url" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="payments">
           <Key>
@@ -63,9 +64,9 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="bigint" Nullable="false" />
           <Property Name="show_id" Type="bigint" Nullable="false" />
-          <Property Name="seat_count" Type="tinyint" Nullable="false" />
-          <Property Name="first_seat_number" Type="tinyint" Nullable="false" />
-          <Property Name="reserved_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="seat_count" Type="int" Nullable="false" />
+          <Property Name="first_seat_number" Type="int" Nullable="false" />
+          <Property Name="reserved_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="shows">
           <Key>
@@ -74,9 +75,9 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="movie_id" Type="bigint" Nullable="false" />
           <Property Name="auditorium_id" Type="bigint" Nullable="false" />
-          <Property Name="start_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="start_at" Type="datetime" Nullable="false" />
           <Property Name="spoken_language" Type="varchar(max)" Nullable="false" />
-          <Property Name="subtitle_language" Type="bigint" Nullable="false" />
+          <Property Name="subtitle_language" Type="bigint" />
           <Property Name="seat_price" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -223,28 +224,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bio_bookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="auditoriums">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cinema_id" Type="Int64" Nullable="false" />
-          <Property Name="seats_total" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="cinemas" Relationship="Self.FK_auditoriums_cinemas" FromRole="auditoriums" ToRole="cinemas" />
-          <NavigationProperty Name="shows" Relationship="Self.FK_shows_auditoriums" FromRole="auditoriums" ToRole="shows" />
-        </EntityType>
-        <EntityType Name="authentication">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="service" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="identyfier" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="secret" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="user_id" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="users" Relationship="Self.FK_authentication_users" FromRole="authentication" ToRole="users" />
-        </EntityType>
         <EntityType Name="cinemas">
           <Key>
             <PropertyRef Name="id" />
@@ -252,22 +231,7 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="auditoriums" Relationship="Self.FK_auditoriums_cinemas" FromRole="cinemas" ToRole="auditoriums" />
-        </EntityType>
-        <EntityType Name="movies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="length" Type="Int16" />
-          <Property Name="age_limit" Type="Byte" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="language" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="premiere" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="shows" Relationship="Self.FK_shows_movies" FromRole="movies" ToRole="shows" />
-          <Property Name="imdb_tag" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="auditoriums" Relationship="bio_bookingModel.FK_auditoriums_cinemas" FromRole="cinemas" ToRole="auditoriums" />
         </EntityType>
         <EntityType Name="payments">
           <Key>
@@ -278,21 +242,7 @@
           <Property Name="payed_at" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="amount" Type="Int64" Nullable="false" />
           <Property Name="refernece" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="reservations" Relationship="Self.FK_payments_reservations" FromRole="payments" ToRole="reservations" />
-        </EntityType>
-        <EntityType Name="reservations">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int64" Nullable="false" />
-          <Property Name="show_id" Type="Int64" Nullable="false" />
-          <Property Name="seat_count" Type="Byte" Nullable="false" />
-          <Property Name="first_seat_number" Type="Byte" Nullable="false" />
-          <Property Name="reserved_at" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="payments" Relationship="Self.FK_payments_reservations" FromRole="reservations" ToRole="payments" />
-          <NavigationProperty Name="shows" Relationship="Self.FK_reservations_shows" FromRole="reservations" ToRole="shows" />
-          <NavigationProperty Name="users" Relationship="Self.FK_reservations_users" FromRole="reservations" ToRole="users" />
+          <NavigationProperty Name="reservation" Relationship="bio_bookingModel.FK_payments_reservations" FromRole="payments" ToRole="reservations" />
         </EntityType>
         <EntityType Name="shows">
           <Key>
@@ -301,13 +251,13 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="movie_id" Type="Int64" Nullable="false" />
           <Property Name="auditorium_id" Type="Int64" Nullable="false" />
-          <Property Name="start_at" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="spoken_language" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="subtitle_language" Type="Int64" Nullable="false" />
+          <Property Name="subtitle_language" Type="Int64" />
           <Property Name="seat_price" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="auditoriums" Relationship="Self.FK_shows_auditoriums" FromRole="shows" ToRole="auditoriums" />
-          <NavigationProperty Name="movies" Relationship="Self.FK_shows_movies" FromRole="shows" ToRole="movies" />
-          <NavigationProperty Name="reservations" Relationship="Self.FK_reservations_shows" FromRole="shows" ToRole="reservations" />
+          <Property Name="start_at" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="movie" Relationship="bio_bookingModel.FK_shows_movies" FromRole="shows" ToRole="movies" />
+          <NavigationProperty Name="auditorium" Relationship="bio_bookingModel.FK_shows_auditoriums" FromRole="shows" ToRole="auditoriums" />
+          <NavigationProperty Name="reservations" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="shows" ToRole="reservations" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -325,12 +275,101 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="authentication" Relationship="Self.FK_authentication_users" FromRole="users" ToRole="authentication" />
-          <NavigationProperty Name="reservations" Relationship="Self.FK_reservations_users" FromRole="users" ToRole="reservations" />
+          <NavigationProperty Name="authentication" Relationship="bio_bookingModel.FK_authentication_users" FromRole="users" ToRole="authentication" />
+          <NavigationProperty Name="reservation" Relationship="bio_bookingModel.FK_reservations_users" FromRole="users" ToRole="reservations" />
+        </EntityType>
+        <EntityContainer Name="bio_bookingEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="cinemas" EntityType="Self.cinemas" />
+          <EntitySet Name="payments" EntityType="Self.payments" />
+          <EntitySet Name="shows" EntityType="Self.shows" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="movies" EntityType="bio_bookingModel.movies" />
+          <AssociationSet Name="FK_shows_movies" Association="bio_bookingModel.FK_shows_movies">
+            <End Role="movies" EntitySet="movies" />
+            <End Role="shows" EntitySet="shows" />
+          </AssociationSet>
+          <EntitySet Name="auditoriums" EntityType="bio_bookingModel.auditoriums" />
+          <EntitySet Name="authentication" EntityType="bio_bookingModel.authentication" />
+          <AssociationSet Name="FK_auditoriums_cinemas" Association="bio_bookingModel.FK_auditoriums_cinemas">
+            <End Role="cinemas" EntitySet="cinemas" />
+            <End Role="auditoriums" EntitySet="auditoriums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shows_auditoriums" Association="bio_bookingModel.FK_shows_auditoriums">
+            <End Role="auditoriums" EntitySet="auditoriums" />
+            <End Role="shows" EntitySet="shows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_authentication_users" Association="bio_bookingModel.FK_authentication_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="authentication" EntitySet="authentication" />
+          </AssociationSet>
+          <EntitySet Name="reservations" EntityType="bio_bookingModel.reservations" />
+          <AssociationSet Name="FK_payments_reservations" Association="bio_bookingModel.FK_payments_reservations">
+            <End Role="reservations" EntitySet="reservations" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservations_shows" Association="bio_bookingModel.FK_reservations_shows">
+            <End Role="shows" EntitySet="shows" />
+            <End Role="reservations" EntitySet="reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservations_users" Association="bio_bookingModel.FK_reservations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="reservations" EntitySet="reservations" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="movies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="length" Type="Int16" />
+          <Property Name="age_limit" Type="Byte" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="language" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="premiere" Type="DateTime" Precision="0" />
+          <Property Name="imdb_tag" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="image_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="shows" Relationship="bio_bookingModel.FK_shows_movies" FromRole="movies" ToRole="shows" />
+        </EntityType>
+        <Association Name="FK_shows_movies">
+          <End Type="bio_bookingModel.movies" Role="movies" Multiplicity="1" />
+          <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shows">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="auditoriums">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cinema_id" Type="Int64" Nullable="false" />
+          <Property Name="seats_total" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="cinema" Relationship="bio_bookingModel.FK_auditoriums_cinemas" FromRole="auditoriums" ToRole="cinemas" />
+          <NavigationProperty Name="shows" Relationship="bio_bookingModel.FK_shows_auditoriums" FromRole="auditoriums" ToRole="shows" />
+        </EntityType>
+        <EntityType Name="authentication">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="identyfier" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="secret" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="bio_bookingModel.FK_authentication_users" FromRole="authentication" ToRole="users" />
         </EntityType>
         <Association Name="FK_auditoriums_cinemas">
-          <End Role="cinemas" Type="Self.cinemas" Multiplicity="1" />
-          <End Role="auditoriums" Type="Self.auditoriums" Multiplicity="*" />
+          <End Type="bio_bookingModel.cinemas" Role="cinemas" Multiplicity="1" />
+          <End Type="bio_bookingModel.auditoriums" Role="auditoriums" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cinemas">
               <PropertyRef Name="id" />
@@ -341,8 +380,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_shows_auditoriums">
-          <End Role="auditoriums" Type="Self.auditoriums" Multiplicity="1" />
-          <End Role="shows" Type="Self.shows" Multiplicity="*" />
+          <End Type="bio_bookingModel.auditoriums" Role="auditoriums" Multiplicity="1" />
+          <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="auditoriums">
               <PropertyRef Name="id" />
@@ -353,8 +392,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_authentication_users">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="authentication" Type="Self.authentication" Multiplicity="*" />
+          <End Type="bio_bookingModel.users" Role="users" Multiplicity="1" />
+          <End Type="bio_bookingModel.authentication" Role="authentication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -364,21 +403,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_shows_movies">
-          <End Role="movies" Type="Self.movies" Multiplicity="1" />
-          <End Role="shows" Type="Self.shows" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="movies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="shows">
-              <PropertyRef Name="movie_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="reservations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="show_id" Type="Int64" Nullable="false" />
+          <Property Name="seat_count" Type="Int32" Nullable="false" />
+          <Property Name="first_seat_number" Type="Int32" Nullable="false" />
+          <Property Name="reserved_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="payments" Relationship="bio_bookingModel.FK_payments_reservations" FromRole="reservations" ToRole="payments" />
+          <NavigationProperty Name="show" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="reservations" ToRole="shows" />
+          <NavigationProperty Name="user" Relationship="bio_bookingModel.FK_reservations_users" FromRole="reservations" ToRole="users" />
+        </EntityType>
         <Association Name="FK_payments_reservations">
-          <End Role="reservations" Type="Self.reservations" Multiplicity="1" />
-          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="1" />
+          <End Type="bio_bookingModel.payments" Role="payments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="reservations">
               <PropertyRef Name="id" />
@@ -389,8 +430,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_reservations_shows">
-          <End Role="shows" Type="Self.shows" Multiplicity="1" />
-          <End Role="reservations" Type="Self.reservations" Multiplicity="*" />
+          <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="1" />
+          <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="shows">
               <PropertyRef Name="id" />
@@ -401,8 +442,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_reservations_users">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="reservations" Type="Self.reservations" Multiplicity="*" />
+          <End Type="bio_bookingModel.users" Role="users" Multiplicity="1" />
+          <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -412,154 +453,115 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bio_bookingEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="auditoriums" EntityType="Self.auditoriums" />
-          <EntitySet Name="authentication" EntityType="Self.authentication" />
-          <EntitySet Name="cinemas" EntityType="Self.cinemas" />
-          <EntitySet Name="movies" EntityType="Self.movies" />
-          <EntitySet Name="payments" EntityType="Self.payments" />
-          <EntitySet Name="reservations" EntityType="Self.reservations" />
-          <EntitySet Name="shows" EntityType="Self.shows" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="users" EntityType="Self.users" />
-          <AssociationSet Name="FK_auditoriums_cinemas" Association="Self.FK_auditoriums_cinemas">
-            <End Role="cinemas" EntitySet="cinemas" />
-            <End Role="auditoriums" EntitySet="auditoriums" />
-          </AssociationSet>
-          <AssociationSet Name="FK_shows_auditoriums" Association="Self.FK_shows_auditoriums">
-            <End Role="auditoriums" EntitySet="auditoriums" />
-            <End Role="shows" EntitySet="shows" />
-          </AssociationSet>
-          <AssociationSet Name="FK_authentication_users" Association="Self.FK_authentication_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="authentication" EntitySet="authentication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_shows_movies" Association="Self.FK_shows_movies">
-            <End Role="movies" EntitySet="movies" />
-            <End Role="shows" EntitySet="shows" />
-          </AssociationSet>
-          <AssociationSet Name="FK_payments_reservations" Association="Self.FK_payments_reservations">
-            <End Role="reservations" EntitySet="reservations" />
-            <End Role="payments" EntitySet="payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_reservations_shows" Association="Self.FK_reservations_shows">
-            <End Role="shows" EntitySet="shows" />
-            <End Role="reservations" EntitySet="reservations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_reservations_users" Association="Self.FK_reservations_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="reservations" EntitySet="reservations" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bio_bookingModelStoreContainer" CdmEntityContainer="bio_bookingEntities">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bio_bookingModelStoreContainer" CdmEntityContainer="bio_bookingEntities">
+    <EntitySetMapping Name="cinemas">
+      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.cinemas)">
+        <MappingFragment StoreEntitySet="cinemas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="location" ColumnName="location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.payments)">
+        <MappingFragment StoreEntitySet="payments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="reservation_id" ColumnName="reservation_id" />
+          <ScalarProperty Name="payed_at" ColumnName="payed_at" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="refernece" ColumnName="refernece" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shows">
+      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.shows)">
+        <MappingFragment StoreEntitySet="shows">
+          <ScalarProperty Name="start_at" ColumnName="start_at" />
+                <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="auditorium_id" ColumnName="auditorium_id" />
+          <ScalarProperty Name="spoken_language" ColumnName="spoken_language" />
+          <ScalarProperty Name="subtitle_language" ColumnName="subtitle_language" />
+          <ScalarProperty Name="seat_price" ColumnName="seat_price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.sysdiagrams)">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.users)">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="movies">
+            <EntityTypeMapping TypeName="bio_bookingModel.movies">
+              <MappingFragment StoreEntitySet="movies">
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="imdb_tag" ColumnName="imdb_tag" />
+                <ScalarProperty Name="premiere" ColumnName="premiere" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="age_limit" ColumnName="age_limit" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="auditoriums">
             <EntityTypeMapping TypeName="bio_bookingModel.auditoriums">
               <MappingFragment StoreEntitySet="auditoriums">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="cinema_id" ColumnName="cinema_id" />
                 <ScalarProperty Name="seats_total" ColumnName="seats_total" />
+                <ScalarProperty Name="cinema_id" ColumnName="cinema_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="authentication">
             <EntityTypeMapping TypeName="bio_bookingModel.authentication">
               <MappingFragment StoreEntitySet="authentication">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="service" ColumnName="service" />
-                <ScalarProperty Name="identyfier" ColumnName="identyfier" />
-                <ScalarProperty Name="secret" ColumnName="secret" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cinemas">
-            <EntityTypeMapping TypeName="bio_bookingModel.cinemas">
-              <MappingFragment StoreEntitySet="cinemas">
+                <ScalarProperty Name="secret" ColumnName="secret" />
+                <ScalarProperty Name="identyfier" ColumnName="identyfier" />
+                <ScalarProperty Name="service" ColumnName="service" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="location" ColumnName="location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="movies">
-            <EntityTypeMapping TypeName="bio_bookingModel.movies">
-              <MappingFragment StoreEntitySet="movies">
-                <ScalarProperty Name="imdb_tag" ColumnName="imdb_tag" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="length" ColumnName="length" />
-                <ScalarProperty Name="age_limit" ColumnName="age_limit" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="language" ColumnName="language" />
-                <ScalarProperty Name="premiere" ColumnName="premiere" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="payments">
-            <EntityTypeMapping TypeName="bio_bookingModel.payments">
-              <MappingFragment StoreEntitySet="payments">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="reservation_id" ColumnName="reservation_id" />
-                <ScalarProperty Name="payed_at" ColumnName="payed_at" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="refernece" ColumnName="refernece" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reservations">
             <EntityTypeMapping TypeName="bio_bookingModel.reservations">
               <MappingFragment StoreEntitySet="reservations">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="show_id" ColumnName="show_id" />
-                <ScalarProperty Name="seat_count" ColumnName="seat_count" />
-                <ScalarProperty Name="first_seat_number" ColumnName="first_seat_number" />
                 <ScalarProperty Name="reserved_at" ColumnName="reserved_at" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="shows">
-            <EntityTypeMapping TypeName="bio_bookingModel.shows">
-              <MappingFragment StoreEntitySet="shows">
+                <ScalarProperty Name="first_seat_number" ColumnName="first_seat_number" />
+                <ScalarProperty Name="seat_count" ColumnName="seat_count" />
+                <ScalarProperty Name="show_id" ColumnName="show_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-                <ScalarProperty Name="auditorium_id" ColumnName="auditorium_id" />
-                <ScalarProperty Name="start_at" ColumnName="start_at" />
-                <ScalarProperty Name="spoken_language" ColumnName="spoken_language" />
-                <ScalarProperty Name="subtitle_language" ColumnName="subtitle_language" />
-                <ScalarProperty Name="seat_price" ColumnName="seat_price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="bio_bookingModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="bio_bookingModel.users">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="email" ColumnName="email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -573,7 +575,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

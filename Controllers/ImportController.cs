@@ -13,15 +13,12 @@ namespace BioBokingMSSQLdatabase.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ImportController : ApiController
     {
-        public SqlConnection connection()
-        {
-            var connectionString = "data source=LAPTOP-BM02332H\\SQLEXPRESS;initial catalog=bio_booking;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
-            return new SqlConnection(connectionString);
-        }
+        private bio_bookingEntities db = new bio_bookingEntities();
 
         // GET api/import
         public int Get(string id)
         {
+            /*
             SqlConnection connection = this.connection();
 
             var query = "SELECT * FROM [movies] WHERE imdb_tag = @id";
@@ -40,7 +37,9 @@ namespace BioBokingMSSQLdatabase.Controllers
                 return 1;
             }
             reader.Close();
-            return 0;
+            
+    */
+    return 0;
         }
 
 

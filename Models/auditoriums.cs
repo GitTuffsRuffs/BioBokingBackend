@@ -25,7 +25,7 @@ namespace BioBokingMSSQLdatabase.Models
         public long cinema_id { get; set; }
         public short seats_total { get; set; }
     
-        public virtual cinemas cinemas { get; set; }
+        public virtual cinemas cinema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<shows> shows { get; set; }
     }

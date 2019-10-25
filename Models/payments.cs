@@ -20,6 +20,6 @@ namespace BioBokingMSSQLdatabase.Models
         public long amount { get; set; }
         public string refernece { get; set; }
     
-        public virtual reservations reservations { get; set; }
+        public virtual reservations reservation { get; set; }
     }
 }

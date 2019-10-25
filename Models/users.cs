@@ -18,7 +18,7 @@ namespace BioBokingMSSQLdatabase.Models
         public users()
         {
             this.authentication = new HashSet<authentication>();
-            this.reservations = new HashSet<reservations>();
+            this.reservation = new HashSet<reservations>();
         }
     
         public long id { get; set; }
@@ -27,6 +27,6 @@ namespace BioBokingMSSQLdatabase.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<authentication> authentication { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<reservations> reservations { get; set; }
+        public virtual ICollection<reservations> reservation { get; set; }
     }
 }

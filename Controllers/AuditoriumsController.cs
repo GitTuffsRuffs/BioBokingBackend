@@ -14,29 +14,29 @@ using BioBokingMSSQLdatabase.Models;
 namespace BioBokingMSSQLdatabase.Controllers
 {
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-    public class MoviesController : ApiController
+    public class AuditoriumsController : ApiController
     {
         private bio_bookingEntities db = new bio_bookingEntities();
 
-        // GET: api/Movies
-        [Route("api/movies")]
-        public IQueryable<movies> Getmovies()
+        //Get: api/auditoriums
+        [Route("api/auditoriums")]
+        public IQueryable<auditoriums> GetAuditoriums()
         {
-            return db.movies;
+            return db.auditoriums;
         }
 
-        // GET: api/Movies/5
-        [Route("api/movie/{id}")]
-        [ResponseType(typeof(movies))]
-        public IHttpActionResult Getmovies(long id)
+        //Get api/aduitorium/id
+        [Route("api/auditoriums/{id}")]
+        [ResponseType(typeof(auditoriums))]
+        public IHttpActionResult GetAuditoriums(long id)
         {
-            movies movies = db.movies.Find(id);
-            if (movies == null)
+            auditoriums auditoriums = db.auditoriums.Find(id);
+            if (auditoriums == null)
             {
                 return NotFound();
             }
 
-            return Ok(movies);
+            return Ok(auditoriums);
         }
     }
 }

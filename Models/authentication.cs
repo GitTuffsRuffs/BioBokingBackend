@@ -20,6 +20,6 @@ namespace BioBokingMSSQLdatabase.Models
         public string secret { get; set; }
         public long user_id { get; set; }
     
-        public virtual users users { get; set; }
+        public virtual users user { get; set; }
     }
 }

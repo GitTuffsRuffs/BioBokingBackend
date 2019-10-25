@@ -40,6 +40,7 @@
     <Property Name="language" Type="varchar(max)" />
     <Property Name="premiere" Type="date" />
     <Property Name="imdb_tag" Type="varchar(max)" Nullable="false" />
+    <Property Name="image_url" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="payments">
     <Key>
@@ -58,9 +59,9 @@
     <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="user_id" Type="bigint" Nullable="false" />
     <Property Name="show_id" Type="bigint" Nullable="false" />
-    <Property Name="seat_count" Type="tinyint" Nullable="false" />
-    <Property Name="first_seat_number" Type="tinyint" Nullable="false" />
-    <Property Name="reserved_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="seat_count" Type="int" Nullable="false" />
+    <Property Name="first_seat_number" Type="int" Nullable="false" />
+    <Property Name="reserved_at" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="shows">
     <Key>
@@ -69,9 +70,9 @@
     <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="movie_id" Type="bigint" Nullable="false" />
     <Property Name="auditorium_id" Type="bigint" Nullable="false" />
-    <Property Name="start_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="start_at" Type="datetime" Nullable="false" />
     <Property Name="spoken_language" Type="varchar(max)" Nullable="false" />
-    <Property Name="subtitle_language" Type="bigint" Nullable="false" />
+    <Property Name="subtitle_language" Type="bigint" />
     <Property Name="seat_price" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">

@@ -29,6 +29,7 @@ namespace BioBokingMSSQLdatabase.Models
         public string language { get; set; }
         public Nullable<System.DateTime> premiere { get; set; }
         public string imdb_tag { get; set; }
+        public string image_url { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<shows> shows { get; set; }
