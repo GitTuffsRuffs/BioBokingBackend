@@ -140,17 +140,5 @@ namespace BioBokingMSSQLdatabase.Controllers
 
             return Ok(reservation);
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

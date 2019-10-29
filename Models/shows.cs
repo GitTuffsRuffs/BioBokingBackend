@@ -23,13 +23,13 @@ namespace BioBokingMSSQLdatabase.Models
         public long id { get; set; }
         public long movie_id { get; set; }
         public long auditorium_id { get; set; }
-        public string spoken_language { get; set; }
-        public Nullable<long> subtitle_language { get; set; }
-        public short seat_price { get; set; }
         public System.DateTime start_at { get; set; }
+        public string spoken_language { get; set; }
+        public string subtitle_language { get; set; }
+        public short seat_price { get; set; }
     
-        public virtual movies movie { get; set; }
         public virtual auditoriums auditorium { get; set; }
+        public virtual movies movie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reservations> reservations { get; set; }
     }

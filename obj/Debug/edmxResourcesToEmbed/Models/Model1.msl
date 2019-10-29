@@ -21,19 +21,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="shows">
-      <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.shows)">
-        <MappingFragment StoreEntitySet="shows">
-          <ScalarProperty Name="start_at" ColumnName="start_at" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-          <ScalarProperty Name="auditorium_id" ColumnName="auditorium_id" />
-          <ScalarProperty Name="spoken_language" ColumnName="spoken_language" />
-          <ScalarProperty Name="subtitle_language" ColumnName="subtitle_language" />
-          <ScalarProperty Name="seat_price" ColumnName="seat_price" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
       <EntityTypeMapping TypeName="IsTypeOf(bio_bookingModel.sysdiagrams)">
         <MappingFragment StoreEntitySet="sysdiagrams">
@@ -98,6 +85,19 @@
           <ScalarProperty Name="seat_count" ColumnName="seat_count" />
           <ScalarProperty Name="show_id" ColumnName="show_id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shows">
+      <EntityTypeMapping TypeName="bio_bookingModel.shows">
+        <MappingFragment StoreEntitySet="shows">
+          <ScalarProperty Name="seat_price" ColumnName="seat_price" />
+          <ScalarProperty Name="subtitle_language" ColumnName="subtitle_language" />
+          <ScalarProperty Name="spoken_language" ColumnName="spoken_language" />
+          <ScalarProperty Name="start_at" ColumnName="start_at" />
+          <ScalarProperty Name="auditorium_id" ColumnName="auditorium_id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

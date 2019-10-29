@@ -72,7 +72,7 @@
     <Property Name="auditorium_id" Type="bigint" Nullable="false" />
     <Property Name="start_at" Type="datetime" Nullable="false" />
     <Property Name="spoken_language" Type="varchar(max)" Nullable="false" />
-    <Property Name="subtitle_language" Type="bigint" />
+    <Property Name="subtitle_language" Type="varchar(max)" />
     <Property Name="seat_price" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">

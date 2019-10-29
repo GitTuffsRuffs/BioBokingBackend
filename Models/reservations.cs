@@ -29,7 +29,7 @@ namespace BioBokingMSSQLdatabase.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payments> payments { get; set; }
-        public virtual shows show { get; set; }
         public virtual users user { get; set; }
+        public virtual shows show { get; set; }
     }
 }

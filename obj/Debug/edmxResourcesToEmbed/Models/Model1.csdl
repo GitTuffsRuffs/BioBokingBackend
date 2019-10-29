@@ -20,21 +20,6 @@
     <Property Name="refernece" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="reservation" Relationship="bio_bookingModel.FK_payments_reservations" FromRole="payments" ToRole="reservations" />
   </EntityType>
-  <EntityType Name="shows">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="movie_id" Type="Int64" Nullable="false" />
-    <Property Name="auditorium_id" Type="Int64" Nullable="false" />
-    <Property Name="spoken_language" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="subtitle_language" Type="Int64" />
-    <Property Name="seat_price" Type="Int16" Nullable="false" />
-    <Property Name="start_at" Type="DateTime" Precision="3" Nullable="false" />
-    <NavigationProperty Name="movie" Relationship="bio_bookingModel.FK_shows_movies" FromRole="shows" ToRole="movies" />
-    <NavigationProperty Name="auditorium" Relationship="bio_bookingModel.FK_shows_auditoriums" FromRole="shows" ToRole="auditoriums" />
-    <NavigationProperty Name="reservations" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="shows" ToRole="reservations" />
-  </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
@@ -57,23 +42,14 @@
   <EntityContainer Name="bio_bookingEntities" annotation:LazyLoadingEnabled="false">
     <EntitySet Name="cinemas" EntityType="Self.cinemas" />
     <EntitySet Name="payments" EntityType="Self.payments" />
-    <EntitySet Name="shows" EntityType="Self.shows" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="users" EntityType="Self.users" />
     <EntitySet Name="movies" EntityType="bio_bookingModel.movies" />
-    <AssociationSet Name="FK_shows_movies" Association="bio_bookingModel.FK_shows_movies">
-      <End Role="movies" EntitySet="movies" />
-      <End Role="shows" EntitySet="shows" />
-    </AssociationSet>
     <EntitySet Name="auditoriums" EntityType="bio_bookingModel.auditoriums" />
     <EntitySet Name="authentication" EntityType="bio_bookingModel.authentication" />
     <AssociationSet Name="FK_auditoriums_cinemas" Association="bio_bookingModel.FK_auditoriums_cinemas">
       <End Role="cinemas" EntitySet="cinemas" />
       <End Role="auditoriums" EntitySet="auditoriums" />
-    </AssociationSet>
-    <AssociationSet Name="FK_shows_auditoriums" Association="bio_bookingModel.FK_shows_auditoriums">
-      <End Role="auditoriums" EntitySet="auditoriums" />
-      <End Role="shows" EntitySet="shows" />
     </AssociationSet>
     <AssociationSet Name="FK_authentication_users" Association="bio_bookingModel.FK_authentication_users">
       <End Role="users" EntitySet="users" />
@@ -84,12 +60,21 @@
       <End Role="reservations" EntitySet="reservations" />
       <End Role="payments" EntitySet="payments" />
     </AssociationSet>
-    <AssociationSet Name="FK_reservations_shows" Association="bio_bookingModel.FK_reservations_shows">
-      <End Role="shows" EntitySet="shows" />
-      <End Role="reservations" EntitySet="reservations" />
-    </AssociationSet>
     <AssociationSet Name="FK_reservations_users" Association="bio_bookingModel.FK_reservations_users">
       <End Role="users" EntitySet="users" />
+      <End Role="reservations" EntitySet="reservations" />
+    </AssociationSet>
+    <EntitySet Name="shows" EntityType="bio_bookingModel.shows" />
+    <AssociationSet Name="FK_shows_auditoriums" Association="bio_bookingModel.FK_shows_auditoriums">
+      <End Role="auditoriums" EntitySet="auditoriums" />
+      <End Role="shows" EntitySet="shows" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shows_movies" Association="bio_bookingModel.FK_shows_movies">
+      <End Role="movies" EntitySet="movies" />
+      <End Role="shows" EntitySet="shows" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reservations_shows" Association="bio_bookingModel.FK_reservations_shows">
+      <End Role="shows" EntitySet="shows" />
       <End Role="reservations" EntitySet="reservations" />
     </AssociationSet>
   </EntityContainer>
@@ -109,18 +94,6 @@
     <Property Name="image_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="shows" Relationship="bio_bookingModel.FK_shows_movies" FromRole="movies" ToRole="shows" />
   </EntityType>
-  <Association Name="FK_shows_movies">
-    <End Type="bio_bookingModel.movies" Role="movies" Multiplicity="1" />
-    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="movies">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="shows">
-        <PropertyRef Name="movie_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="auditoriums">
     <Key>
       <PropertyRef Name="id" />
@@ -155,18 +128,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_shows_auditoriums">
-    <End Type="bio_bookingModel.auditoriums" Role="auditoriums" Multiplicity="1" />
-    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="auditoriums">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="shows">
-        <PropertyRef Name="auditorium_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_authentication_users">
     <End Type="bio_bookingModel.users" Role="users" Multiplicity="1" />
     <End Type="bio_bookingModel.authentication" Role="authentication" Multiplicity="*" />
@@ -190,8 +151,8 @@
     <Property Name="first_seat_number" Type="Int32" Nullable="false" />
     <Property Name="reserved_at" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="payments" Relationship="bio_bookingModel.FK_payments_reservations" FromRole="reservations" ToRole="payments" />
-    <NavigationProperty Name="show" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="reservations" ToRole="shows" />
     <NavigationProperty Name="user" Relationship="bio_bookingModel.FK_reservations_users" FromRole="reservations" ToRole="users" />
+    <NavigationProperty Name="show" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="reservations" ToRole="shows" />
   </EntityType>
   <Association Name="FK_payments_reservations">
     <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="1" />
@@ -205,18 +166,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_reservations_shows">
-    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="1" />
-    <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="shows">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="reservations">
-        <PropertyRef Name="show_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_reservations_users">
     <End Type="bio_bookingModel.users" Role="users" Multiplicity="1" />
     <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="*" />
@@ -226,6 +175,57 @@
       </Principal>
       <Dependent Role="reservations">
         <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="shows">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="movie_id" Type="Int64" Nullable="false" />
+    <Property Name="auditorium_id" Type="Int64" Nullable="false" />
+    <Property Name="start_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="spoken_language" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="subtitle_language" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="seat_price" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="auditorium" Relationship="bio_bookingModel.FK_shows_auditoriums" FromRole="shows" ToRole="auditoriums" />
+    <NavigationProperty Name="movie" Relationship="bio_bookingModel.FK_shows_movies" FromRole="shows" ToRole="movies" />
+    <NavigationProperty Name="reservations" Relationship="bio_bookingModel.FK_reservations_shows" FromRole="shows" ToRole="reservations" />
+  </EntityType>
+  <Association Name="FK_shows_auditoriums">
+    <End Type="bio_bookingModel.auditoriums" Role="auditoriums" Multiplicity="1" />
+    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="auditoriums">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="shows">
+        <PropertyRef Name="auditorium_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shows_movies">
+    <End Type="bio_bookingModel.movies" Role="movies" Multiplicity="1" />
+    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="shows">
+        <PropertyRef Name="movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reservations_shows">
+    <End Type="bio_bookingModel.shows" Role="shows" Multiplicity="1" />
+    <End Type="bio_bookingModel.reservations" Role="reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shows">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reservations">
+        <PropertyRef Name="show_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

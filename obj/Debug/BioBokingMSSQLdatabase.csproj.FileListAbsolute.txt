@@ -170,3 +170,6 @@ C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\Sy
 C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\System.Text.Encodings.Web.xml
 C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\System.Web.Http.Cors.xml
+C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+C:\Users\tuffs\source\repos\BioBokingMSSQLdatabase\BioBokingMSSQLdatabase\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml

@@ -28,12 +28,12 @@ namespace BioBokingMSSQLdatabase.Models
     
         public virtual DbSet<cinemas> cinemas { get; set; }
         public virtual DbSet<payments> payments { get; set; }
-        public virtual DbSet<shows> shows { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<movies> movies { get; set; }
         public virtual DbSet<auditoriums> auditoriums { get; set; }
         public virtual DbSet<authentication> authentication { get; set; }
         public virtual DbSet<reservations> reservations { get; set; }
+        public virtual DbSet<shows> shows { get; set; }
     }
 }
